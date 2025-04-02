@@ -38,7 +38,7 @@ const ContactForm = () => {
   useEffect(() => {
     // Initialize EmailJS with your public key
     // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
-    emailjs.init('YOUR_PUBLIC_KEY');
+    emailjs.init('6AjqAI-U0wS_1Rnc-');
   }, []);
 
   const handleChange = (e) => {
@@ -96,14 +96,14 @@ const ContactForm = () => {
     try {
       // Using EmailJS to send emails
       const result = await emailjs.send(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        'service_bb0vuuq', // Replace with your EmailJS service ID
+        'template_xoqxdzq', // Replace with your EmailJS template ID
         {
           from_name: formData.name,
           from_email: formData.email,
           subject: formData.subject,
           message: formData.message,
-          to_email: 'tensaeaschalew27@gmail.com'
+          to_email: 'tensaeaschalew26@gmail.com'
         }
       );
       
