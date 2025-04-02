@@ -3,7 +3,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 
 const Resume = () => {
   const handleDownload = () => {
-    window.open('https://drive.google.com/file/d/1mcz4XxqXwf1X71wnr5Y6zGc-kASGh_bN/view?usp=sharing', '_blank');
+    window.open('https://drive.google.com/file/d/1o5noe_Ni4T5E2Gq10ZGSh3fpW0NiwVnK/view?usp=sharing', '_blank');
   };
 
   return (
@@ -31,7 +31,6 @@ const Resume = () => {
           <Link href="https://github.com/TENSAEA" target="_blank" underline="hover">github.com/TENSAEA</Link>
           <Link href="https://www.linkedin.com/in/tensae-aschalew-339368239" target="_blank" underline="hover">LinkedIn</Link>
           <Link href="https://tensae-ubuntu-portfolio.vercel.app" target="_blank" underline="hover">Portfolio</Link>
-          <Link href="https://tensae-dev-portfolio.onrender.com" target="_blank" underline="hover">Dev Portfolio</Link>
           <Typography>Addis Ababa, 1000, Ethiopia | +251-984-04-9121</Typography>
         </Box>
         
