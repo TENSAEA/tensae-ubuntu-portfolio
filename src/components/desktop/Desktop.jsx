@@ -7,12 +7,16 @@ import FileManager from '../windows/FileManager';
 import ProjectViewer from '../windows/ProjectViewer';
 import AboutMe from '../windows/AboutMe';
 import ContactForm from '../windows/ContactForm';
+import Terminal from '../windows/Terminal';
+import Resume from '../windows/Resume';
 
 // Import your icons (you'll need to create or download these)
 import folderIcon from '../../assets/icons/folder.svg';
 import projectsIcon from '../../assets/icons/projects.svg';
 import aboutIcon from '../../assets/icons/about.svg';
 import contactIcon from '../../assets/icons/contact.svg';
+import terminalIcon from '../../assets/icons/terminal.svg';
+import resumeIcon from '../../assets/icons/resume.svg';
 
 const Desktop = () => {
   const [windows, setWindows] = useState([]);
@@ -49,6 +53,22 @@ const Desktop = () => {
     })));
   };
 
+  const minimizeWindow = (id) => {
+    // Implementation for minimizing windows can be added here
+    // For now, we'll just hide it from the windows array temporarily
+    setWindows(windows.map(window => 
+      window.id === id ? { ...window, minimized: true } : window
+    ));
+  };
+
+  const restoreWindow = (id) => {
+    // Restore minimized window
+    setWindows(windows.map(window => 
+      window.id === id ? { ...window, minimized: false } : window
+    ));
+    focusWindow(id);
+  };
+
   const handleIconClick = (type) => {
     switch (type) {
       case 'files':
@@ -63,10 +83,22 @@ const Desktop = () => {
       case 'contact':
         openWindow('contact', 'Contact Me', null);
         break;
+      case 'terminal':
+        openWindow('terminal', 'Terminal', null);
+        break;
+      case 'resume':
+        openWindow('resume', 'Resume', null);
+        break;
       default:
         break;
     }
   };
+
+  // Get minimized windows for taskbar
+  const minimizedWindows = windows.filter(window => window.minimized);
+  
+  // Get visible windows
+  const visibleWindows = windows.filter(window => !window.minimized);
 
   return (
     <Box 
@@ -81,7 +113,11 @@ const Desktop = () => {
         backgroundPosition: 'center'
       }}
     >
-      <Taskbar onMenuItemClick={handleIconClick} />
+      <Taskbar 
+        onMenuItemClick={handleIconClick} 
+        minimizedWindows={minimizedWindows}
+        onRestoreWindow={restoreWindow}
+      />
       
       <Box 
          sx={{ 
@@ -114,9 +150,19 @@ const Desktop = () => {
           label="Contact" 
           onClick={() => handleIconClick('contact')} 
         />
+        <DesktopIcon 
+          icon={terminalIcon} 
+          label="Terminal" 
+          onClick={() => handleIconClick('terminal')} 
+        />
+        <DesktopIcon 
+          icon={resumeIcon} 
+          label="Resume" 
+          onClick={() => handleIconClick('resume')} 
+        />
       </Box>
 
-      {windows.map((window) => (
+      {visibleWindows.map((window) => (
         <Window
           key={window.id}
           id={window.id}
@@ -127,11 +173,14 @@ const Desktop = () => {
           isActive={activeWindow === window.id}
           onClose={() => closeWindow(window.id)}
           onFocus={() => focusWindow(window.id)}
+          onMinimize={() => minimizeWindow(window.id)}
         >
           {window.type === 'fileManager' && <FileManager />}
           {window.type === 'projects' && <ProjectViewer />}
           {window.type === 'about' && <AboutMe />}
           {window.type === 'contact' && <ContactForm />}
+          {window.type === 'terminal' && <Terminal />}
+          {window.type === 'resume' && <Resume />}
         </Window>
       ))}
     </Box>
