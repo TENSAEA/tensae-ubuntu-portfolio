@@ -25,7 +25,7 @@ const Desktop = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
   // Ubuntu purple background image for mobile
-  const ubuntuPurpleBackground = 'url(https://wallpaperaccess.com/full/1267681.jpg)';
+  const ubuntuPurpleBackground = 'url(https://wallpapers.com/wallpapers/ubuntu-iconic-gradient-lts-nafdrtic8fyu3x55.html)';
   // Regular Ubuntu wallpaper for desktop
   const ubuntuDesktopBackground = 'url(https://wallpapers.com/images/hd/iconic-ubuntu-hd-desktop-z6rtxbp6rijb53hx.webp)';
 
