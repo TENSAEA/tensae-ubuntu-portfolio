@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'; // Added useEffect
+import { useState, useEffect } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import Taskbar from '../taskbar/Taskbar';
 import DesktopIcon from './DesktopIcon';
@@ -17,7 +17,7 @@ import aboutIcon from '../../assets/icons/about.svg';
 import contactIcon from '../../assets/icons/contact.svg';
 import terminalIcon from '../../assets/icons/terminal.svg';
 import resumeIcon from '../../assets/icons/resume.svg';
-import videoIcon from '../../assets/icons/video.svg'; // Add a video icon if you have one
+import videoIcon from '../../assets/icons/video.svg';
 
 const Desktop = () => {
   const [windows, setWindows] = useState([]);
@@ -225,14 +225,20 @@ const Desktop = () => {
           {window.type === 'resume' && <Resume />}
           {window.type === 'video' && (
             <Box sx={{ p: 1, height: '100%' }}>
-              <iframe
-                src="https://www.veed.io/embed/cf486810-e921-402c-b829-50f57195dfb9"
+              <video
                 width="100%"
                 height="100%"
-                frameBorder="0"
-                allow="autoplay; fullscreen"
-                allowFullScreen
-              />
+                controls
+                autoPlay
+                muted // Add muted to ensure autoplay works in most browsers
+              >
+                {/* Replace this source with your actual video file URL */}
+                <source 
+                  src="https://www.veed.io/view/cf486810-e921-402c-b829-50f57195dfb9" 
+                  type="video/mp4" 
+                />
+                Your browser does not support the video tag.
+              </video>
             </Box>
           )}
         </Window>
@@ -242,3 +248,4 @@ const Desktop = () => {
 };
 
 export default Desktop;
+
