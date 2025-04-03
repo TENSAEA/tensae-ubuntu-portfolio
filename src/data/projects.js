@@ -9,8 +9,9 @@ const projects = [
       "Node.js",
       "Express",
       "MongoDB",
-      "Redux",
+      "Redux Toolkit",
       "Material UI",
+      "Render",
     ],
     imageUrl: "/images/LiraWorksapce.png",
     demoUrl: "https://lira-workspace.onrender.com/",
@@ -23,12 +24,21 @@ const projects = [
     title: "Nest_Net Building Management",
     description:
       "A comprehensive building management system built with PHP. Features include tenant management, maintenance requests, billing, and reporting.",
-    technologies: ["PHP", "MySQL", "JavaScript", "Bootstrap", "jQuery"],
+    technologies: [
+      "PHP",
+      "MySQL",
+      "JavaScript",
+      "Bootstrap",
+      "HTML",
+      "Infinityfree",
+    ],
     imageUrl: "/images/buildingmangaementsystem.png",
     demoUrl:
       "http://nest-net-building.infinityfreeapp.com/Building/html/dashboard/auth/sign-in.php?i=1",
-    githubUrl: "https://github.com/TENSAEA/Nest_Net",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    githubUrl:
+      "https://github.com/TENSAEA/nest-net-building-management-system.git",
+    videoUrl:
+      "https://www.veed.io/view/601a49d8-2a46-4ac7-8edb-0711f0e26e2c?panel=share",
   },
   {
     id: 3,
@@ -36,17 +46,18 @@ const projects = [
     description:
       "An e-commerce platform built with MERN Stack, featuring GraphQL and REST API integration. Includes product management, shopping cart, and checkout functionality.",
     technologies: [
+      "GraphQL",
       "React",
       "Node.js",
       "Express",
       "MongoDB",
-      "GraphQL",
       "REST API",
     ],
     imageUrl: "/images/ScandiwebReady.png",
     demoUrl: "https://scandiweb-ready.onrender.com/",
-    githubUrl: "https://github.com/TENSAEA/scandiweb-ready",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    githubUrl: "https://github.com/TENSAEA/scandiweb-ready-backend.git",
+    videoUrl:
+      "https://www.veed.io/view/80c0bddf-ad50-48d4-8242-1c60e8e0f056?panel=share",
   },
   {
     id: 4,
@@ -54,17 +65,18 @@ const projects = [
     description:
       "A digital platform for Ethiopia's traditional saving system (Ekub) built with MERN Stack. Features include group creation, member management, and payment tracking.",
     technologies: [
-      "React",
       "Node.js",
       "Express",
       "MongoDB",
+      "React",
       "Redux",
       "Bootstrap",
     ],
     imageUrl: "/images/DigitalEqub.png",
     demoUrl: "https://digital-equb-frontend-new.onrender.com/",
-    githubUrl: "https://github.com/TENSAEA/digital-ekub",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    githubUrl: "https://github.com/TENSAEA/digital-equb-frontend-new.git",
+    videoUrl:
+      "https://www.veed.io/view/8f043b69-fc8f-4a00-a039-8fa39cefaf71?panel=share",
   },
   {
     id: 5,
@@ -74,8 +86,10 @@ const projects = [
     technologies: ["PHP", "React", "GraphQL", "MySQL", "Redux", "Material UI"],
     imageUrl: "/images/ecommerce.png",
     demoUrl: "https://ecommercetensae.infinityfreeapp.com/login",
-    githubUrl: "https://github.com/TENSAEA/ecommerce-graphql",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    githubUrl:
+      "https://github.com/TENSAEA/ecommerce-app-graphql-react-frontend-vercel.git",
+    videoUrl:
+      "https://www.veed.io/view/f074a9f5-286a-4c99-b074-bedd12c8b44f?panel=share",
   },
   {
     id: 6,
@@ -85,19 +99,29 @@ const projects = [
     technologies: ["React", "Material UI", "CSS", "JavaScript"],
     imageUrl: "/images/Portfolio.png",
     demoUrl: "https://tensae-ubuntu-portfolio.vercel.app/",
-    githubUrl: "https://github.com/TENSAEA/tensae-ubuntu-portfolio",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    githubUrl: "https://github.com/TENSAEA/tensae-ubuntu-portfolio.git",
+    videoUrl:
+      "https://www.veed.io/view/8355e4f5-4568-4319-aebc-8e418bc8675f?panel=share",
   },
   {
     id: 7,
     title: "Quick Notes",
     description:
       "A simple note-taking application with rich text editing, categories, and search functionality.",
-    technologies: ["React", "Firebase", "Material UI", "Draft.js"],
+    technologies: [
+      "Redux with Axios",
+      "Material UI",
+      "React",
+      "Mongo DB",
+      "Node JS",
+
+      "Render",
+    ],
     imageUrl: "/images/QuickNOtes.png",
     demoUrl: "https://quick-notes-app.vercel.app/",
-    githubUrl: "https://quicknote-ydsm.onrender.com/login",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    githubUrl: "https://github.com/TENSAEA/quicknote-backend-mern.git",
+    videoUrl:
+      "https://www.veed.io/view/c3c4903e-09d9-4b08-a10b-53f6856d046c?panel=share",
   },
   {
     id: 8,
@@ -107,8 +131,9 @@ const projects = [
     technologies: ["React", "Node.js", "Express", "MongoDB"],
     imageUrl: "/images/technologyclub.png",
     demoUrl: "https://technologyofsocialscienceclubaau.wuaze.com/?i=1",
-    githubUrl: "https://github.com/TENSAEA/tech-club-website",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    githubUrl: "",
+    videoUrl:
+      "https://www.veed.io/view/35ed2f16-4cee-4151-943b-1bcefa6b364c?panel=share",
   },
 ];
 

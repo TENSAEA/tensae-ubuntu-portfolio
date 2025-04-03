@@ -90,9 +90,9 @@ const Terminal = () => {
         
       case 'projects':
         addToOutput('My Projects:', 'heading');
-        addToOutput('1. Project 1 - React and Node.js application', 'text');
-        addToOutput('2. Project 2 - React and Firebase web application', 'text');
-        addToOutput('3. Project 3 - React Native mobile app', 'text');
+        addToOutput('1. Project 1 - Check the projects folder for more', 'text');
+        addToOutput('2. Project 2 - Check the projects folder for more', 'text');
+        addToOutput('3. Project 3 - Check the projects folder for more', 'text');
         break;
         
       case 'contact':
