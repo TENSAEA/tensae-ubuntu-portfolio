@@ -2,11 +2,6 @@
 ![image](https://github.com/user-attachments/assets/cd209aaa-3de4-4798-a7a1-d28597e7b78c)
 
 
-
-Here is the reformatted text with a typing animation, collapsible sections, and colorful badges:
-
-
-```markdown
 <div align="center">
   <h3>
     <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=500&size=25&pause=1000&color=00E7FF&center=true&vCenter=true&random=false&width=435&lines=Features;Technologies%20Used;Getting%20Started;Customization;License" alt="Typing SVG" />
