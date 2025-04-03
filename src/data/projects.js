@@ -14,8 +14,9 @@ const projects = [
     ],
     imageUrl: "/images/LiraWorksapce.png",
     demoUrl: "https://lira-workspace.onrender.com/",
-    githubUrl: "https://github.com/TENSAEA/Lira-Workspace",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    githubUrl: "https://github.com/TENSAEA/lira-workspace-frontend.git",
+    videoUrl:
+      "https://www.veed.io/view/17ee61fb-1678-4a90-89f2-6631ae687057?panel=share",
   },
   {
     id: 2,
