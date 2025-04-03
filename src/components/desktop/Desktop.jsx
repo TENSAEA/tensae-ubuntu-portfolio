@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import Taskbar from '../taskbar/Taskbar';
 import DesktopIcon from './DesktopIcon';
@@ -18,10 +18,11 @@ import contactIcon from '../../assets/icons/contact.svg';
 import terminalIcon from '../../assets/icons/terminal.svg';
 import resumeIcon from '../../assets/icons/resume.svg';
 import videoIcon from '../../assets/icons/video.svg';
-
 const Desktop = () => {
   const [windows, setWindows] = useState([]);
   const [activeWindow, setActiveWindow] = useState(null);
+  const [showVideo, setShowVideo] = useState(true);
+  const videoRef = useRef(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
@@ -30,10 +31,10 @@ const Desktop = () => {
   // Regular Ubuntu wallpaper for desktop
   const ubuntuDesktopBackground = 'url(https://wallpapers.com/images/hd/iconic-ubuntu-hd-desktop-z6rtxbp6rijb53hx.webp)';
 
-  // Auto-open video window on component mount
-  useEffect(() => {
-    openVideoWindow();
-  }, []);
+  // Handle video end
+  const handleVideoEnd = () => {
+    setShowVideo(false);
+  };
 
   const openWindow = (windowType, title, content) => {
     const id = Date.now();
@@ -48,21 +49,6 @@ const Desktop = () => {
     };
     
     setWindows([...windows, newWindow]);
-    setActiveWindow(id);
-  };
-
-  const openVideoWindow = () => {
-    const id = Date.now();
-    const videoWindow = {
-      id,
-      type: 'video',
-      title: 'Welcome Video',
-      zIndex: windows.length + 1,
-      position: { x: 200, y: 50 },
-      size: { width: 640, height: 480 },
-    };
-    
-    setWindows([...windows, videoWindow]);
     setActiveWindow(id);
   };
 
@@ -113,7 +99,11 @@ const Desktop = () => {
         openWindow('resume', 'Resume', null);
         break;
       case 'video':
-        openVideoWindow();
+        setShowVideo(true);
+        if (videoRef.current) {
+          videoRef.current.currentTime = 0;
+          videoRef.current.play();
+        }
         break;
       default:
         break;
@@ -138,6 +128,36 @@ const Desktop = () => {
         backgroundPosition: 'center'
       }}
     >
+      {/* Intro Video */}
+      {showVideo && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            zIndex: 9999,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onClick={() => setShowVideo(false)}
+        >
+          <video
+            ref={videoRef}
+            autoPlay
+            controls
+            style={{ maxWidth: '90%', maxHeight: '90%' }}
+            onEnded={handleVideoEnd}
+          >
+            <source src="/videos/tensae_video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </Box>
+      )}
+
       <Taskbar
         onMenuItemClick={handleIconClick}
         minimizedWindows={minimizedWindows}
@@ -211,19 +231,6 @@ const Desktop = () => {
           {window.type === 'contact' && <ContactForm />}
           {window.type === 'terminal' && <Terminal />}
           {window.type === 'resume' && <Resume />}
-          {window.type === 'video' && (
-            <Box sx={{ p: 1, height: '100%' }}>
-              <iframe
-                src="/video.html"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allow="autoplay; fullscreen"
-                allowFullScreen
-                title="Welcome Video"
-              />
-            </Box>
-          )}
         </Window>
       ))}
     </Box>
