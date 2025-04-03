@@ -231,11 +231,10 @@ const Desktop = () => {
                 controls
                 autoPlay
                 muted // Required for autoplay in most browsers
-                loop // Optional: makes the video loop
+                loop // Optional: remove if you don’t want the video to repeat
               >
-                {/* Sample public video URL for testing */}
                 <source 
-                  src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" 
+                  src="/videos/tensae_video.mp4" 
                   type="video/mp4" 
                 />
                 Your browser does not support the video tag.
