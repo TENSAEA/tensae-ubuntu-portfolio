@@ -95,7 +95,7 @@ const projects = [
     technologies: ["React", "Firebase", "Material UI", "Draft.js"],
     imageUrl: "/images/QuickNOtes.png",
     demoUrl: "https://quick-notes-app.vercel.app/",
-    githubUrl: "https://github.com/TENSAEA/quick-notes",
+    githubUrl: "https://quicknote-ydsm.onrender.com/login",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   },
   {
@@ -105,7 +105,7 @@ const projects = [
       "A website for a technology club featuring event management, member registration, and resource sharing.",
     technologies: ["React", "Node.js", "Express", "MongoDB"],
     imageUrl: "/images/technologyclub.png",
-    demoUrl: "https://tech-club-website.vercel.app/",
+    demoUrl: "https://technologyofsocialscienceclubaau.wuaze.com/?i=1",
     githubUrl: "https://github.com/TENSAEA/tech-club-website",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
   },
