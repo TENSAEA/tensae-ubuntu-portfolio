@@ -25,15 +25,10 @@ const Desktop = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
-  const ubuntuPurpleBackground = 'url(https://wallpapers.com/wallpapers/ubuntu-iconic-gradient-lts-nafdrtic8fyu3x55.html)';
+  // Ubuntu purple background image for mobile
+  const ubuntuPurpleBackground = 'url(https://wallpaperaccess.com/full/1267681.jpg)';
+  // Regular Ubuntu wallpaper for desktop
   const ubuntuDesktopBackground = 'url(https://wallpapers.com/images/hd/iconic-ubuntu-hd-desktop-z6rtxbp6rijb53hx.webp)';
-
-  // Ubuntu color scheme
-  const ubuntuColors = {
-    border: '#E95420', // Ubuntu orange
-    borderSecondary: '#772953', // Ubuntu aubergine
-    background: '#300A24', // Dark purple
-  };
 
   // Auto-open video window on component mount
   useEffect(() => {
@@ -63,7 +58,7 @@ const Desktop = () => {
       type: 'video',
       title: 'Welcome Video',
       zIndex: windows.length + 1,
-      position: { x: 200, y: 50 }, // Positioned near icons
+      position: { x: 200, y: 50 },
       size: { width: 640, height: 480 },
     };
     
@@ -125,7 +120,9 @@ const Desktop = () => {
     }
   };
 
+  // Get minimized windows for taskbar
   const minimizedWindows = windows.filter(window => window.minimized);
+  // Get visible windows
   const visibleWindows = windows.filter(window => !window.minimized);
 
   return (
@@ -207,15 +204,6 @@ const Desktop = () => {
           onClose={() => closeWindow(window.id)}
           onFocus={() => focusWindow(window.id)}
           onMinimize={() => minimizeWindow(window.id)}
-          sx={{
-            border: `2px solid ${ubuntuColors.border}`,
-            '&:hover': {
-              borderColor: ubuntuColors.borderSecondary,
-            },
-            backgroundColor: ubuntuColors.background,
-            borderRadius: '8px',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          }}
         >
           {window.type === 'fileManager' && <FileManager />}
           {window.type === 'projects' && <ProjectViewer />}
