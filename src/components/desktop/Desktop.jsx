@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react'; // Added useEffect
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import Taskbar from '../taskbar/Taskbar';
 import DesktopIcon from './DesktopIcon';
@@ -10,13 +10,14 @@ import ContactForm from '../windows/ContactForm';
 import Terminal from '../windows/Terminal';
 import Resume from '../windows/Resume';
 
-// Import your icons (you'll need to create or download these)
+// Import your icons
 import folderIcon from '../../assets/icons/folder.svg';
 import projectsIcon from '../../assets/icons/projects.svg';
 import aboutIcon from '../../assets/icons/about.svg';
 import contactIcon from '../../assets/icons/contact.svg';
 import terminalIcon from '../../assets/icons/terminal.svg';
 import resumeIcon from '../../assets/icons/resume.svg';
+import videoIcon from '../../assets/icons/video.svg'; // Add a video icon if you have one
 
 const Desktop = () => {
   const [windows, setWindows] = useState([]);
@@ -24,10 +25,20 @@ const Desktop = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
-  // Ubuntu purple background image for mobile
   const ubuntuPurpleBackground = 'url(https://wallpapers.com/wallpapers/ubuntu-iconic-gradient-lts-nafdrtic8fyu3x55.html)';
-  // Regular Ubuntu wallpaper for desktop
   const ubuntuDesktopBackground = 'url(https://wallpapers.com/images/hd/iconic-ubuntu-hd-desktop-z6rtxbp6rijb53hx.webp)';
+
+  // Ubuntu color scheme
+  const ubuntuColors = {
+    border: '#E95420', // Ubuntu orange
+    borderSecondary: '#772953', // Ubuntu aubergine
+    background: '#300A24', // Dark purple
+  };
+
+  // Auto-open video window on component mount
+  useEffect(() => {
+    openVideoWindow();
+  }, []);
 
   const openWindow = (windowType, title, content) => {
     const id = Date.now();
@@ -42,6 +53,21 @@ const Desktop = () => {
     };
     
     setWindows([...windows, newWindow]);
+    setActiveWindow(id);
+  };
+
+  const openVideoWindow = () => {
+    const id = Date.now();
+    const videoWindow = {
+      id,
+      type: 'video',
+      title: 'Welcome Video',
+      zIndex: windows.length + 1,
+      position: { x: 200, y: 50 }, // Positioned near icons
+      size: { width: 640, height: 480 },
+    };
+    
+    setWindows([...windows, videoWindow]);
     setActiveWindow(id);
   };
 
@@ -91,14 +117,15 @@ const Desktop = () => {
       case 'resume':
         openWindow('resume', 'Resume', null);
         break;
+      case 'video':
+        openVideoWindow();
+        break;
       default:
         break;
     }
   };
 
-  // Get minimized windows for taskbar
   const minimizedWindows = windows.filter(window => window.minimized);
-  // Get visible windows
   const visibleWindows = windows.filter(window => !window.minimized);
 
   return (
@@ -161,6 +188,11 @@ const Desktop = () => {
           label="Resume" 
           onClick={() => handleIconClick('resume')} 
         />
+        <DesktopIcon 
+          icon={videoIcon} 
+          label="Video" 
+          onClick={() => handleIconClick('video')} 
+        />
       </Box>
 
       {visibleWindows.map((window) => (
@@ -175,6 +207,15 @@ const Desktop = () => {
           onClose={() => closeWindow(window.id)}
           onFocus={() => focusWindow(window.id)}
           onMinimize={() => minimizeWindow(window.id)}
+          sx={{
+            border: `2px solid ${ubuntuColors.border}`,
+            '&:hover': {
+              borderColor: ubuntuColors.borderSecondary,
+            },
+            backgroundColor: ubuntuColors.background,
+            borderRadius: '8px',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          }}
         >
           {window.type === 'fileManager' && <FileManager />}
           {window.type === 'projects' && <ProjectViewer />}
@@ -182,6 +223,18 @@ const Desktop = () => {
           {window.type === 'contact' && <ContactForm />}
           {window.type === 'terminal' && <Terminal />}
           {window.type === 'resume' && <Resume />}
+          {window.type === 'video' && (
+            <Box sx={{ p: 1, height: '100%' }}>
+              <iframe
+                src="https://www.veed.io/embed/cf486810-e921-402c-b829-50f57195dfb9"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allow="autoplay; fullscreen"
+                allowFullScreen
+              />
+            </Box>
+          )}
         </Window>
       ))}
     </Box>
