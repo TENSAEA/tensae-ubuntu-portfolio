@@ -39,7 +39,6 @@
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React"/></a>
   <a href="#"><img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"/></a>
-  <a href="#"><img src="https://img.shields.io/badge/Material%20UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white" alt="Material UI"/></a>
   <a href="#"><img src="https://img.shields.io/badge/React%20Rnd-34A85A?style=for-the-badge&logo=react-rnd&logoColor=white" alt="React Rnd"/></a>
   <a href="#"><img src="https://img.shields.io/badge/Framer%20Motion-0055FF?style=for-the-badge&logo=framer-motion&logoColor=white" alt="Framer Motion"/></a>
   <br>
@@ -73,14 +72,7 @@
 </p>
 </details>
 
-<details open>
-<summary><h3>📜 License</h3></summary>
-<p align="center">
-  <a href="#"><img src="https://img.shields.io/badge/MIT-007ACC?style=for-the-badge&logo=mit&logoColor=white" alt="MIT License"/></a>
-  <br>
-  MIT
-</p>
-</details>
+
 
 <details open>
 <summary><h3>🚀 Running the Application</h3></summary>
