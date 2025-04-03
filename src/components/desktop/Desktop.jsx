@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'; // Added useEffect
+import { useState, useEffect } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import Taskbar from '../taskbar/Taskbar';
 import DesktopIcon from './DesktopIcon';
@@ -17,7 +17,7 @@ import aboutIcon from '../../assets/icons/about.svg';
 import contactIcon from '../../assets/icons/contact.svg';
 import terminalIcon from '../../assets/icons/terminal.svg';
 import resumeIcon from '../../assets/icons/resume.svg';
-import videoIcon from '../../assets/icons/video.svg'; // Add a video icon if you have one
+import videoIcon from '../../assets/icons/video.svg';
 
 const Desktop = () => {
   const [windows, setWindows] = useState([]);
@@ -225,14 +225,21 @@ const Desktop = () => {
           {window.type === 'resume' && <Resume />}
           {window.type === 'video' && (
             <Box sx={{ p: 1, height: '100%' }}>
-              
-               <iframe
-                      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
-                      src="https://www.veed.io/embed/cf486810-e921-402c-b829-50f57195dfb9"
-                      title="Tensae"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
+              <video
+                width="100%"
+                height="100%"
+                controls
+                autoPlay
+                muted // Required for autoplay in most browsers
+                loop // Optional: makes the video loop
+              >
+                {/* Sample public video URL for testing */}
+                <source 
+                  src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" 
+                  type="video/mp4" 
+                />
+                Your browser does not support the video tag.
+              </video>
             </Box>
           )}
         </Window>
