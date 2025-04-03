@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
+import ReactPlayer from 'react-player';
 import Taskbar from '../taskbar/Taskbar';
 import DesktopIcon from './DesktopIcon';
 import Window from '../windows/Window';
@@ -22,7 +23,6 @@ import videoIcon from '../../assets/icons/video.svg';
 const Desktop = () => {
   const [windows, setWindows] = useState([]);
   const [activeWindow, setActiveWindow] = useState(null);
-  const videoRef = useRef(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   
@@ -69,18 +69,6 @@ const Desktop = () => {
     
     setWindows([...windows, videoWindow]);
     setActiveWindow(id);
-    
-    // Try to play the video after the window is created
-    setTimeout(() => {
-      if (videoRef.current) {
-        const playPromise = videoRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.error("Video play failed:", error);
-          });
-        }
-      }
-    }, 100);
   };
 
   const closeWindow = (id) => {
@@ -238,20 +226,23 @@ const Desktop = () => {
               bgcolor: '#300A24', // Ubuntu purple background
               p: 1
             }}>
-              <video
-                ref={videoRef}
-                controls
-                autoPlay
-                muted
-                style={{ 
-                  maxWidth: '100%', 
-                  maxHeight: '100%', 
-                  objectFit: 'contain'
+              <ReactPlayer
+                url="/videos/tensae_video.mp4"
+                width="100%"
+                height="100%"
+                playing={true}
+                controls={true}
+                muted={true}
+                config={{
+                  file: {
+                    attributes: {
+                      style: {
+                        objectFit: 'contain'
+                      }
+                    }
+                  }
                 }}
-              >
-                <source src="/videos/tensae_video.mp4" type="video/mp4" />
-                Your browser does not support video playback.
-              </video>
+              />
             </Box>
           )}
         </Window>
