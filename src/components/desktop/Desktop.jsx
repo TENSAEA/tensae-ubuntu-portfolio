@@ -225,20 +225,15 @@ const Desktop = () => {
           {window.type === 'resume' && <Resume />}
           {window.type === 'video' && (
             <Box sx={{ p: 1, height: '100%' }}>
-              <video
+              <iframe
+                src="/video.html"
                 width="100%"
                 height="100%"
-                controls
-                autoPlay
-                muted // Required for autoplay in most browsers
-                loop // Optional: remove if you don’t want the video to repeat
-              >
-                <source 
-                  src="/videos/tensae_video.mp4" 
-                  type="video/mp4" 
-                />
-                Your browser does not support the video tag.
-              </video>
+                frameBorder="0"
+                allow="autoplay; fullscreen"
+                allowFullScreen
+                title="Welcome Video"
+              />
             </Box>
           )}
         </Window>
