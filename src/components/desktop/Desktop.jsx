@@ -227,7 +227,7 @@ const Desktop = () => {
               p: 1
             }}>
               <ReactPlayer
-                url="https://youtu.be/2Vv-BfVoq4g"
+                url="https://youtu.be/Tc65secowTQ"
                 width="100%"
                 height="100%"
                 playing={true}
