@@ -1,6 +1,7 @@
 # Ubuntu-Style Portfolio
 
 This is a portfolio website designed to look and function like the Ubuntu operating system. It's built with React, Vite, and Material UI.
+![image](https://github.com/user-attachments/assets/cd209aaa-3de4-4798-a7a1-d28597e7b78c)
 
 ## Features
 
