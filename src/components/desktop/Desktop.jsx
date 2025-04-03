@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import Taskbar from '../taskbar/Taskbar';
 import DesktopIcon from './DesktopIcon';
 import Window from '../windows/Window';
@@ -21,6 +21,13 @@ import resumeIcon from '../../assets/icons/resume.svg';
 const Desktop = () => {
   const [windows, setWindows] = useState([]);
   const [activeWindow, setActiveWindow] = useState(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
+  // Ubuntu purple background image for mobile
+  const ubuntuPurpleBackground = 'url(https://wallpaperaccess.com/full/1267681.jpg)';
+  // Regular Ubuntu wallpaper for desktop
+  const ubuntuDesktopBackground = 'url(https://wallpapers.com/images/hd/iconic-ubuntu-hd-desktop-z6rtxbp6rijb53hx.webp)';
 
   const openWindow = (windowType, title, content) => {
     const id = Date.now();
@@ -54,18 +61,13 @@ const Desktop = () => {
   };
 
   const minimizeWindow = (id) => {
-    // Implementation for minimizing windows can be added here
-    // For now, we'll just hide it from the windows array temporarily
-    setWindows(windows.map(window => 
-      window.id === id ? { ...window, minimized: true } : window
-    ));
+    setWindows(windows.map(window =>
+      window.id === id ? { ...window, minimized: true } : window));
   };
 
   const restoreWindow = (id) => {
-    // Restore minimized window
-    setWindows(windows.map(window => 
-      window.id === id ? { ...window, minimized: false } : window
-    ));
+    setWindows(windows.map(window =>
+      window.id === id ? { ...window, minimized: false } : window));
     focusWindow(id);
   };
 
@@ -96,7 +98,6 @@ const Desktop = () => {
 
   // Get minimized windows for taskbar
   const minimizedWindows = windows.filter(window => window.minimized);
-  
   // Get visible windows
   const visibleWindows = windows.filter(window => !window.minimized);
 
@@ -108,27 +109,27 @@ const Desktop = () => {
         bgcolor: 'secondary.main', 
         overflow: 'hidden',
         position: 'relative',
-        backgroundImage:'url(https://wallpapers.com/images/hd/iconic-ubuntu-hd-desktop-z6rtxbp6rijb53hx.webp)',
+        backgroundImage: isMobile ? ubuntuPurpleBackground : ubuntuDesktopBackground,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
     >
-      <Taskbar 
-        onMenuItemClick={handleIconClick} 
+      <Taskbar
+        onMenuItemClick={handleIconClick}
         minimizedWindows={minimizedWindows}
         onRestoreWindow={restoreWindow}
       />
       
       <Box 
-         sx={{ 
-            position: 'absolute', 
-            top: 10, 
-            left: 10,
-            display: 'flex',
-            flexDirection: 'column', // This makes icons stack vertically
-            gap: 1, // Adds space between icons
-            pt: 5 // Add padding top to avoid overlap with taskbar
-          }}
+        sx={{ 
+          position: 'absolute', 
+          top: 10, 
+          left: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1,
+          pt: 5
+        }}
       >
         <DesktopIcon 
           icon={folderIcon} 
