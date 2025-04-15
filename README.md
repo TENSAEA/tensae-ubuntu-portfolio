@@ -1,7 +1,7 @@
 
   
   <img src="[https://readme-typing-svg.herokuapp.com](https://readme-typing-svg.herokuapp.com)?font=Fira+Code&weight=500&size=28&pause=1000&color=F75C7E&center=true&vCenter=true&width=700&lines=Tensae+Aschalew's+Ubuntu+Portfolio;Exploring+Linux+%26+Open-Source;Collection+of+Personal+Projects" alt="Typing SVG" />
-</div>
+
 
 ---
 
