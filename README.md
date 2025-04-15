@@ -1,6 +1,5 @@
 
 <div align="center">
-  <img src="https://github.com/tensaeaschalew/ubuntu-portfolio/blob/main/assets/ubuntu-logo.png" width="60px" />
   
   <br/>
   
