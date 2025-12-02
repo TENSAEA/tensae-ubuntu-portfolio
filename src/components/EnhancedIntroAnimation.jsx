@@ -246,7 +246,7 @@ const AdvancedTerminalIntro = ({ onComplete }) => {
                                     '50%': { opacity: 0.5 }
                                 }
                             }}>
-                                🚀 LAUNCHING PORTFOLIO DESKTOP...
+                                {/* 🚀 LAUNCHING PORTFOLIO DESKTOP... */}
                             </Typography>
                         </Box>
                     )}
