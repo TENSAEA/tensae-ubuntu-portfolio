@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Rnd } from 'react-rnd';
-import { Box, Typography, IconButton, Slider, Tooltip } from '@mui/material';
+import { Box, Typography, IconButton, Slider, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import MinimizeIcon from '@mui/icons-material/Minimize';
 import CropSquareIcon from '@mui/icons-material/CropSquare';
@@ -22,6 +22,10 @@ const Window = ({
   onFocus,
   onMinimize
 }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [isMaximized, setIsMaximized] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [opacity, setOpacity] = useState(1);
@@ -31,7 +35,8 @@ const Window = ({
 
   // Get current window state
   const getCurrentPosition = () => {
-    if (isFullscreen) {
+    // On mobile, always use full-screen positioning
+    if (isMobile || isFullscreen) {
       return { x: 0, y: 0 };
     } else if (isMaximized) {
       return { x: 0, y: 48 }; // Below taskbar
@@ -40,7 +45,8 @@ const Window = ({
   };
 
   const getCurrentSize = () => {
-    if (isFullscreen) {
+    // On mobile, always use full-screen size
+    if (isMobile || isFullscreen) {
       return {
         width: window.innerWidth,
         height: window.innerHeight
@@ -89,7 +95,8 @@ const Window = ({
 
   const currentPosition = getCurrentPosition();
   const currentSize = getCurrentSize();
-  const currentZIndex = isFullscreen ? 9999 : (isActive ? 999 : zIndex);
+  const currentZIndex = (isMobile || isFullscreen) ? 9999 : (isActive ? 999 : zIndex);
+  const isFullScreenMode = isMobile || isFullscreen;
 
   return (
     <motion.div
@@ -97,17 +104,17 @@ const Window = ({
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.2 }}
       style={{
-        position: isFullscreen ? 'fixed' : 'absolute',
+        position: isFullScreenMode ? 'fixed' : 'absolute',
         zIndex: currentZIndex,
-        top: isFullscreen ? 0 : 'auto',
-        left: isFullscreen ? 0 : 'auto',
-        right: isFullscreen ? 0 : 'auto',
-        bottom: isFullscreen ? 0 : 'auto',
-        width: isFullscreen ? '100vw' : 'auto',
-        height: isFullscreen ? '100vh' : 'auto',
+        top: isFullScreenMode ? 0 : 'auto',
+        left: isFullScreenMode ? 0 : 'auto',
+        right: isFullScreenMode ? 0 : 'auto',
+        bottom: isFullScreenMode ? 0 : 'auto',
+        width: isFullScreenMode ? '100vw' : 'auto',
+        height: isFullScreenMode ? '100vh' : 'auto',
       }}
     >
-      {isFullscreen ? (
+      {isFullScreenMode ? (
         // Fullscreen mode - use Box without Rnd
         <Box
           onClick={() => onFocus(id)}
@@ -154,8 +161,8 @@ const Window = ({
               setNormalPosition(position);
             }
           }}
-          minWidth={400}
-          minHeight={300}
+          minWidth={isSmallMobile ? 280 : 400}
+          minHeight={isSmallMobile ? 200 : 300}
           onMouseDown={() => onFocus(id)}
           dragHandleClassName="window-header"
           disableDragging={false}
@@ -208,14 +215,14 @@ const Window = ({
               ? 'linear-gradient(135deg, #3C3B37 0%, #2C2C2C 100%)'
               : 'linear-gradient(135deg, #4A4A4A 0%, #3A3A3A 100%)',
             color: 'white',
-            px: 2,
-            py: 1,
+            px: { xs: 1, sm: 2 },
+            py: { xs: 0.5, sm: 1 },
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             borderBottom: isActive ? '1px solid rgba(233, 84, 32, 0.3)' : '1px solid rgba(0, 0, 0, 0.2)',
             transition: 'all 0.3s',
-            cursor: isFullscreen ? 'default' : 'move',
+            cursor: isFullScreenMode ? 'default' : 'move',
             userSelect: 'none'
           }}
         >
@@ -224,69 +231,76 @@ const Window = ({
             variant="body2"
             sx={{
               fontWeight: 'bold',
-              fontSize: '14px',
+              fontSize: { xs: '12px', sm: '14px' },
               color: isActive ? 'white' : '#AEA79F',
               flex: 1,
               textAlign: 'center',
-              ml: 10
+              ml: { xs: 4, sm: 10 },
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
             }}
           >
             {title}
           </Typography>
 
           {/* Window Control Buttons */}
-          <Box sx={{ display: 'flex', gap: 0.5 }}>
-            {/* Opacity Control */}
-            <Tooltip title="Opacity">
-              <IconButton
-                size="small"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowOpacityControl(!showOpacityControl);
-                }}
-                sx={{
-                  width: 28,
-                  height: 28,
-                  bgcolor: 'rgba(255, 255, 255, 0.1)',
-                  color: showOpacityControl ? '#9C27B0' : '#AEA79F',
-                  padding: 0,
-                  '&:hover': {
-                    bgcolor: 'rgba(156, 39, 176, 0.3)',
-                    color: '#9C27B0',
-                    transform: 'scale(1.1)'
-                  },
-                  transition: 'all 0.2s'
-                }}
-              >
-                <OpacityIcon sx={{ fontSize: 16 }} />
-              </IconButton>
-            </Tooltip>
+          <Box sx={{ display: 'flex', gap: { xs: 0.3, sm: 0.5 } }}>
+            {/* Opacity Control - Hide on small mobile */}
+            {!isSmallMobile && (
+              <Tooltip title="Opacity">
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowOpacityControl(!showOpacityControl);
+                  }}
+                  sx={{
+                    width: { xs: 32, sm: 28 },
+                    height: { xs: 32, sm: 28 },
+                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                    color: showOpacityControl ? '#9C27B0' : '#AEA79F',
+                    padding: 0,
+                    '&:hover': {
+                      bgcolor: 'rgba(156, 39, 176, 0.3)',
+                      color: '#9C27B0',
+                      transform: 'scale(1.1)'
+                    },
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <OpacityIcon sx={{ fontSize: { xs: 18, sm: 16 } }} />
+                </IconButton>
+              </Tooltip>
 
-            {/* Fullscreen Button */}
-            <Tooltip title={isFullscreen ? "Exit Fullscreen (F11)" : "Fullscreen (F11)"}>
-              <IconButton
-                size="small"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleFullscreen();
-                }}
-                sx={{
-                  width: 28,
-                  height: 28,
-                  bgcolor: 'rgba(255, 255, 255, 0.1)',
-                  color: isFullscreen ? '#2196F3' : '#AEA79F',
-                  padding: 0,
-                  '&:hover': {
-                    bgcolor: 'rgba(33, 150, 243, 0.3)',
-                    color: '#2196F3',
-                    transform: 'scale(1.1)'
-                  },
-                  transition: 'all 0.2s'
-                }}
-              >
-                {isFullscreen ? <FullscreenExitIcon sx={{ fontSize: 16 }} /> : <FullscreenIcon sx={{ fontSize: 16 }} />}
-              </IconButton>
-            </Tooltip>
+            )}
+            {/* Fullscreen Button - Hide on mobile (already full-screen) */}
+            {!isMobile && (
+              <Tooltip title={isFullscreen ? "Exit Fullscreen (F11)" : "Fullscreen (F11)"}>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleFullscreen();
+                  }}
+                  sx={{
+                    width: { xs: 32, sm: 28 },
+                    height: { xs: 32, sm: 28 },
+                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                    color: isFullscreen ? '#2196F3' : '#AEA79F',
+                    padding: 0,
+                    '&:hover': {
+                      bgcolor: 'rgba(33, 150, 243, 0.3)',
+                      color: '#2196F3',
+                      transform: 'scale(1.1)'
+                    },
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  {isFullscreen ? <FullscreenExitIcon sx={{ fontSize: { xs: 18, sm: 16 } }} /> : <FullscreenIcon sx={{ fontSize: { xs: 18, sm: 16 } }} />}
+                </IconButton>
+              </Tooltip>
+            )}
 
             {/* Minimize Button */}
             <Tooltip title="Minimize">
@@ -297,8 +311,8 @@ const Window = ({
                   onMinimize(id);
                 }}
                 sx={{
-                  width: 28,
-                  height: 28,
+                  width: { xs: 32, sm: 28 },
+                  height: { xs: 32, sm: 28 },
                   bgcolor: 'rgba(255, 255, 255, 0.1)',
                   color: '#AEA79F',
                   padding: 0,
@@ -310,35 +324,37 @@ const Window = ({
                   transition: 'all 0.2s'
                 }}
               >
-                <MinimizeIcon sx={{ fontSize: 16 }} />
+                <MinimizeIcon sx={{ fontSize: { xs: 18, sm: 16 } }} />
               </IconButton>
             </Tooltip>
 
-            {/* Maximize/Restore Button */}
-            <Tooltip title={isMaximized ? "Restore Down" : "Maximize"}>
-              <IconButton
-                size="small"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleMaximize();
-                }}
-                sx={{
-                  width: 28,
-                  height: 28,
-                  bgcolor: 'rgba(255, 255, 255, 0.1)',
-                  color: isMaximized ? '#4CAF50' : '#AEA79F',
-                  padding: 0,
-                  '&:hover': {
-                    bgcolor: 'rgba(76, 175, 80, 0.3)',
-                    color: '#4CAF50',
-                    transform: 'scale(1.1)'
-                  },
-                  transition: 'all 0.2s'
-                }}
-              >
-                {isMaximized ? <FilterNoneIcon sx={{ fontSize: 16 }} /> : <CropSquareIcon sx={{ fontSize: 16 }} />}
-              </IconButton>
-            </Tooltip>
+            {/* Maximize/Restore Button - Hide on mobile (already maximized) */}
+            {!isMobile && (
+              <Tooltip title={isMaximized ? "Restore Down" : "Maximize"}>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMaximize();
+                  }}
+                  sx={{
+                    width: { xs: 32, sm: 28 },
+                    height: { xs: 32, sm: 28 },
+                    bgcolor: 'rgba(255, 255, 255, 0.1)',
+                    color: isMaximized ? '#4CAF50' : '#AEA79F',
+                    padding: 0,
+                    '&:hover': {
+                      bgcolor: 'rgba(76, 175, 80, 0.3)',
+                      color: '#4CAF50',
+                      transform: 'scale(1.1)'
+                    },
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  {isMaximized ? <FilterNoneIcon sx={{ fontSize: { xs: 18, sm: 16 } }} /> : <CropSquareIcon sx={{ fontSize: { xs: 18, sm: 16 } }} />}
+                </IconButton>
+              </Tooltip>
+            )}
 
             {/* Close Button */}
             <Tooltip title="Close">
@@ -349,8 +365,8 @@ const Window = ({
                   onClose(id);
                 }}
                 sx={{
-                  width: 28,
-                  height: 28,
+                  width: { xs: 32, sm: 28 },
+                  height: { xs: 32, sm: 28 },
                   bgcolor: 'rgba(255, 255, 255, 0.1)',
                   color: '#AEA79F',
                   padding: 0,
@@ -362,7 +378,7 @@ const Window = ({
                   transition: 'all 0.2s'
                 }}
               >
-                <CloseIcon sx={{ fontSize: 16 }} />
+                <CloseIcon sx={{ fontSize: { xs: 18, sm: 16 } }} />
               </IconButton>
             </Tooltip>
           </Box>
@@ -424,7 +440,7 @@ const Window = ({
 
         {/* Status Bar */}
         <Box sx={{
-          px: 2,
+          px: { xs: 1, sm: 2 },
           py: 0.5,
           bgcolor: '#E0E0E0',
           borderTop: '1px solid #CCC',
@@ -432,10 +448,10 @@ const Window = ({
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-          <Typography variant="caption" sx={{ color: '#666', fontSize: '11px', fontFamily: 'monospace' }}>
-            {isFullscreen ? '⛶ Fullscreen' : isMaximized ? '⬜ Maximized' : '🪟 Windowed'}
+          <Typography variant="caption" sx={{ color: '#666', fontSize: { xs: '9px', sm: '11px' }, fontFamily: 'monospace' }}>
+            {isFullScreenMode ? '⛶ Fullscreen' : isMaximized ? '⬜ Maximized' : '🪟 Windowed'}
           </Typography>
-          <Typography variant="caption" sx={{ color: '#666', fontSize: '11px', fontFamily: 'monospace' }}>
+          <Typography variant="caption" sx={{ color: '#666', fontSize: { xs: '9px', sm: '11px' }, fontFamily: 'monospace' }}>
             {Math.round(currentSize.width)} × {Math.round(currentSize.height)}
           </Typography>
         </Box>

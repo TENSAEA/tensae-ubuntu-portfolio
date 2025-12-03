@@ -109,15 +109,15 @@ const StatsDashboard = () => {
             </Typography>
 
             {/* Main Stats Grid */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
+            <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: { xs: 2, sm: 4 } }}>
                 {stats.map((stat, index) => (
-                    <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Grid item xs={6} sm={6} md={4} key={index}>
                         <Paper
                             elevation={3}
                             sx={{
-                                p: 3,
+                                p: { xs: 2, sm: 3 },
                                 textAlign: 'center',
-                                background: `linear-gradient(135deg, ${stat.color}15 0%, ${stat.color}05 100%)`,
+                                background: `linear-gradient(135deg, ${stat.color}15 0%, ${stat.color}05 100%}`,
                                 border: `2px solid ${stat.color}30`,
                                 borderRadius: 3,
                                 transition: 'all 0.3s',
@@ -129,15 +129,16 @@ const StatsDashboard = () => {
                                 }
                             }}
                         >
-                            <Box sx={{ color: stat.color, mb: 2 }}>
-                                {stat.icon}
+                            <Box sx={{ color: stat.color, mb: { xs: 1, sm: 2 } }}>
+                                {React.cloneElement(stat.icon, { sx: { fontSize: { xs: 30, sm: 40 } } })}
                             </Box>
                             <Typography
                                 variant="h3"
                                 sx={{
                                     fontWeight: 'bold',
                                     color: stat.color,
-                                    mb: 1
+                                    mb: { xs: 0.5, sm: 1 },
+                                    fontSize: { xs: '1.75rem', sm: '3rem' }
                                 }}
                             >
                                 {typeof stat.value === 'number' && stat.value < 100 ? (
@@ -158,11 +159,11 @@ const StatsDashboard = () => {
             </Grid>
 
             {/* Skills Section */}
-            <Paper elevation={3} sx={{ p: 4, borderRadius: 3, mb: 4 }}>
-                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mb: 3 }}>
+            <Paper elevation={3} sx={{ p: { xs: 2, sm: 4 }, borderRadius: 3, mb: { xs: 2, sm: 4 } }}>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mb: { xs: 2, sm: 3 }, fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                     Core Technologies
                 </Typography>
-                <Grid container spacing={3}>
+                <Grid container spacing={{ xs: 2, sm: 3 }}>
                     {skills.map((skill, index) => (
                         <Grid item xs={12} sm={6} key={index}>
                             <Box sx={{ mb: 2 }}>
@@ -197,32 +198,32 @@ const StatsDashboard = () => {
             <Paper
                 elevation={4}
                 sx={{
-                    p: 4,
+                    p: { xs: 2, sm: 4 },
                     borderRadius: 3,
                     background: 'linear-gradient(135deg, #E95420 0%, #C34113 100%)',
                     color: 'white',
                     textAlign: 'center'
                 }}
             >
-                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                     Why Clients Choose Me
                 </Typography>
-                <Grid container spacing={2} sx={{ mt: 2 }}>
+                <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ mt: { xs: 1, sm: 2 } }}>
                     <Grid item xs={12} md={4}>
-                        <Typography variant="h6" gutterBottom>⚡ Fast Delivery</Typography>
-                        <Typography variant="body2">
+                        <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>⚡ Fast Delivery</Typography>
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.813rem', sm: '0.875rem' } }}>
                             Projects delivered on-time or ahead of schedule
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Typography variant="h6" gutterBottom>💬 Clear Communication</Typography>
-                        <Typography variant="body2">
+                        <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>💬 Clear Communication</Typography>
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.813rem', sm: '0.875rem' } }}>
                             Daily updates and responsive to all messages
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Typography variant="h6" gutterBottom>🎯 Business Focused</Typography>
-                        <Typography variant="body2">
+                        <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>🎯 Business Focused</Typography>
+                        <Typography variant="body2" sx={{ fontSize: { xs: '0.813rem', sm: '0.875rem' } }}>
                             Solutions that increase revenue and reduce costs
                         </Typography>
                     </Grid>

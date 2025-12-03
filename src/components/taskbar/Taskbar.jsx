@@ -73,7 +73,7 @@ const Taskbar = ({ onMenuItemClick, minimizedWindows, onRestoreWindow }) => {
         borderBottom: '1px solid rgba(233, 84, 32, 0.3)'
       }}
     >
-      <Toolbar variant="dense" sx={{ minHeight: 40, px: 1, gap: 1 }}>
+      <Toolbar variant="dense" sx={{ minHeight: { xs: 36, sm: 40 }, px: { xs: 0.5, sm: 1 }, gap: { xs: 0.5, sm: 1 } }}>
         {/* Ubuntu Menu Button */}
         <IconButton
           color="inherit"
@@ -83,12 +83,14 @@ const Taskbar = ({ onMenuItemClick, minimizedWindows, onRestoreWindow }) => {
           sx={{
             color: 'white',
             bgcolor: 'rgba(233, 84, 32, 0.2)',
+            width: { xs: 36, sm: 40 },
+            height: { xs: 36, sm: 40 },
             '&:hover': {
               bgcolor: 'rgba(233, 84, 32, 0.4)'
             }
           }}
         >
-          <AppsIcon />
+          <AppsIcon sx={{ fontSize: { xs: 18, sm: 24 } }} />
         </IconButton>
 
         <Menu
@@ -154,8 +156,9 @@ const Taskbar = ({ onMenuItemClick, minimizedWindows, onRestoreWindow }) => {
           sx={{
             color: 'white',
             fontWeight: 'bold',
-            display: { xs: 'none', sm: 'block' },
-            letterSpacing: 0.5
+            display: { xs: 'none', md: 'block' },
+            letterSpacing: 0.5,
+            fontSize: { sm: '12px', md: '14px' }
           }}
         >
           TENSAE ASCHALEW
@@ -170,8 +173,8 @@ const Taskbar = ({ onMenuItemClick, minimizedWindows, onRestoreWindow }) => {
             color: '#4CAF50',
             border: '1px solid #4CAF50',
             fontWeight: 'bold',
-            fontSize: '10px',
-            height: 24,
+            fontSize: { xs: '8px', sm: '10px' },
+            height: { xs: 20, sm: 24 },
             animation: 'pulse 2s infinite',
             '@keyframes pulse': {
               '0%, 100%': { opacity: 1 },
@@ -247,10 +250,11 @@ const Taskbar = ({ onMenuItemClick, minimizedWindows, onRestoreWindow }) => {
             bgcolor: '#E95420',
             color: 'white',
             fontWeight: 'bold',
-            fontSize: '11px',
-            px: 2,
-            py: 0.5,
+            fontSize: { xs: '9px', sm: '11px' },
+            px: { xs: 1.5, sm: 2 },
+            py: { xs: 0.3, sm: 0.5 },
             textTransform: 'none',
+            minWidth: { xs: 'auto', sm: 'auto' },
             '&:hover': {
               bgcolor: '#C34113',
               transform: 'scale(1.05)'
@@ -263,7 +267,7 @@ const Taskbar = ({ onMenuItemClick, minimizedWindows, onRestoreWindow }) => {
         </Button>
 
         {/* System Tray */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+        <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: 0.5 }}>
           <IconButton color="inherit" size="small" sx={{ color: 'white', p: 0.5 }}>
             <WifiIcon fontSize="small" />
           </IconButton>
@@ -273,27 +277,25 @@ const Taskbar = ({ onMenuItemClick, minimizedWindows, onRestoreWindow }) => {
           <IconButton color="inherit" size="small" sx={{ color: 'white', p: 0.5 }}>
             <BatteryFullIcon fontSize="small" />
           </IconButton>
+        </Box>
 
-          <Divider orientation="vertical" flexItem sx={{ mx: 1, bgcolor: 'rgba(255,255,255,0.2)' }} />
-
-          {/* Date & Time */}
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            px: 1,
-            py: 0.5,
-            bgcolor: 'rgba(0, 0, 0, 0.3)',
-            borderRadius: 1,
-            minWidth: 80
-          }}>
-            <Typography variant="caption" sx={{ color: 'white', fontWeight: 'bold', fontSize: '11px', lineHeight: 1.2 }}>
-              {formatTime(time)}
-            </Typography>
-            <Typography variant="caption" sx={{ color: '#AEA79F', fontSize: '9px', lineHeight: 1.2 }}>
-              {formatDate(time)}
-            </Typography>
-          </Box>
+        {/* Date & Time */}
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          px: { xs: 0.5, sm: 1 },
+          py: 0.5,
+          bgcolor: 'rgba(0, 0, 0, 0.3)',
+          borderRadius: 1,
+          minWidth: { xs: 50, sm: 80 }
+        }}>
+          <Typography variant="caption" sx={{ color: 'white', fontWeight: 'bold', fontSize: { xs: '9px', sm: '11px' }, lineHeight: 1.2 }}>
+            {formatTime(time)}
+          </Typography>
+          <Typography variant="caption" sx={{ color: '#AEA79F', fontSize: { xs: '7px', sm: '9px' }, lineHeight: 1.2, display: { xs: 'none', sm: 'block' } }}>
+            {formatDate(time)}
+          </Typography>
         </Box>
       </Toolbar>
     </AppBar>
