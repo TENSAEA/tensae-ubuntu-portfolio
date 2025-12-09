@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
     Box, Typography, TextField, Button, Chip, Card, CardContent,
     CardMedia, CardActions, ToggleButton, ToggleButtonGroup,
@@ -13,8 +13,12 @@ import StarIcon from '@mui/icons-material/Star';
 import LaunchIcon from '@mui/icons-material/Launch';
 import CodeIcon from '@mui/icons-material/Code';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { motion, AnimatePresence } from 'framer-motion';
 import projects from '../../data/projects';
 import testimonials from '../../data/testimonials';
+
 
 const AdvancedProjects = () => {
     // State management
@@ -603,6 +607,199 @@ const ProjectCard = ({ project, viewMode, onViewDetails }) => {
     );
 };
 
+// Media Carousel Component
+const MediaCarousel = ({ screenshots, videoUrl, title }) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+    // Combine screenshots and video into media array
+    const mediaItems = [
+        ...screenshots.map(url => ({ type: 'image', url })),
+        ...(videoUrl ? [{ type: 'video', url: videoUrl }] : [])
+    ];
+
+    // Auto-play carousel every 5 seconds
+    useEffect(() => {
+        if (!isAutoPlaying || mediaItems.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % mediaItems.length);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [isAutoPlaying, mediaItems.length]);
+
+    const handlePrev = () => {
+        setIsAutoPlaying(false);
+        setCurrentIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
+    };
+
+    const handleNext = () => {
+        setIsAutoPlaying(false);
+        setCurrentIndex((prev) => (prev + 1) % mediaItems.length);
+    };
+
+    if (mediaItems.length === 0) return null;
+
+    const currentMedia = mediaItems[currentIndex];
+
+    return (
+        <Box sx={{ position: 'relative', mb: 3 }}>
+            <Box sx={{
+                position: 'relative',
+                height: 400,
+                borderRadius: 2,
+                overflow: 'hidden',
+                bgcolor: 'grey.900'
+            }}>
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={currentIndex}
+                        initial={{ opacity: 0, x: 100 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -100 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ height: '100%' }}
+                    >
+                        {currentMedia.type === 'image' ? (
+                            <CardMedia
+                                component="img"
+                                height="400"
+                                image={currentMedia.url}
+                                alt={`${title} - Screenshot ${currentIndex + 1}`}
+                                sx={{
+                                    objectFit: 'contain',
+                                    bgcolor: 'grey.900'
+                                }}
+                            />
+                        ) : (
+                            <Box sx={{
+                                position: 'relative',
+                                paddingBottom: '56.25%',
+                                height: 0,
+                                overflow: 'hidden',
+                                bgcolor: 'grey.900'
+                            }}>
+                                {currentMedia.url ? (
+                                    <iframe
+                                        style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            width: '100%',
+                                            height: '100%',
+                                            border: 0
+                                        }}
+                                        src={currentMedia.url}
+                                        title={`${title} - Demo Video`}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                ) : (
+                                    <Box sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        height: '400px',
+                                        color: 'grey.500'
+                                    }}>
+                                        <Typography variant="body2">Video will be available soon</Typography>
+                                    </Box>
+                                )}
+                            </Box>
+                        )}
+                    </motion.div>
+                </AnimatePresence>
+
+                {/* Navigation Arrows */}
+                {mediaItems.length > 1 && (
+                    <>
+                        <IconButton
+                            onClick={handlePrev}
+                            sx={{
+                                position: 'absolute',
+                                left: 10,
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                bgcolor: 'rgba(0, 0, 0, 0.6)',
+                                color: 'white',
+                                '&:hover': {
+                                    bgcolor: 'rgba(0, 0, 0, 0.8)',
+                                }
+                            }}
+                        >
+                            <ArrowBackIosNewIcon />
+                        </IconButton>
+                        <IconButton
+                            onClick={handleNext}
+                            sx={{
+                                position: 'absolute',
+                                right: 10,
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                bgcolor: 'rgba(0, 0, 0, 0.6)',
+                                color: 'white',
+                                '&:hover': {
+                                    bgcolor: 'rgba(0, 0, 0, 0.8)',
+                                }
+                            }}
+                        >
+                            <ArrowForwardIosIcon />
+                        </IconButton>
+                    </>
+                )}
+            </Box>
+
+            {/* Indicators */}
+            {mediaItems.length > 1 && (
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: 1,
+                    mt: 2
+                }}>
+                    {mediaItems.map((item, index) => (
+                        <Box
+                            key={index}
+                            onClick={() => {
+                                setIsAutoPlaying(false);
+                                setCurrentIndex(index);
+                            }}
+                            sx={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: '50%',
+                                bgcolor: index === currentIndex ? 'primary.main' : 'grey.400',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s',
+                                '&:hover': {
+                                    transform: 'scale(1.2)',
+                                }
+                            }}
+                        />
+                    ))}
+                </Box>
+            )}
+
+            {/* Media Type Indicator */}
+            <Box sx={{
+                position: 'absolute',
+                bottom: 50,
+                right: 20,
+                bgcolor: 'rgba(0, 0, 0, 0.7)',
+                color: 'white',
+                px: 2,
+                py: 0.5,
+                borderRadius: 1
+            }}>
+                <Typography variant="caption">
+                    {currentMedia.type === 'image' ? 'Screenshot' : 'Video'} {currentIndex + 1}/{mediaItems.length}
+                </Typography>
+            </Box>
+        </Box>
+    );
+};
+
 const ProjectDetailsModal = ({ project, open, onClose }) => {
     if (!project) return null;
 
@@ -630,11 +827,11 @@ const ProjectDetailsModal = ({ project, open, onClose }) => {
             </DialogTitle>
 
             <DialogContent dividers sx={{ p: 3 }}>
-                <CardMedia
-                    component="img"
-                    image={project.imageUrl || 'https://via.placeholder.com/800x400?text=No+Image'}
-                    alt={project.title}
-                    sx={{ width: '100%', borderRadius: 2, mb: 3 }}
+                {/* Media Carousel */}
+                <MediaCarousel
+                    screenshots={project.screenshots || [project.imageUrl]}
+                    videoUrl={project.videoUrl}
+                    title={project.title}
                 />
 
                 {project.clientImpact && (
